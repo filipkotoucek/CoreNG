@@ -53,10 +53,12 @@ static void __initialize()
 	NVIC_ClearPendingIRQ(PIOB_IRQn);
 	NVIC_EnableIRQ(PIOB_IRQn);
 
+#ifdef ID_PIOC
 	pmc_enable_periph_clk(ID_PIOC);
 	NVIC_DisableIRQ(PIOC_IRQn);
 	NVIC_ClearPendingIRQ(PIOC_IRQn);
 	NVIC_EnableIRQ(PIOC_IRQn);
+#endif
 
 #ifdef ID_PIOD
 	pmc_enable_periph_clk(ID_PIOD);
@@ -130,11 +132,13 @@ bool attachInterrupt(uint32_t pin, void (*callback)(CallbackParameter), enum Int
 		callbacksPioB[pos].func = callback;
 		callbacksPioB[pos].param = param;
 	}
+#ifdef ID_PIOC
 	else if (pio == PIOC)
 	{
 		callbacksPioC[pos].func = callback;
 		callbacksPioC[pos].param = param;
 	}
+#endif
 #ifdef ID_PIOD
 	else if (pio == PIOD)
 	{
@@ -237,11 +241,12 @@ extern "C" void PIOB_Handler(void)
 {
 	CommonPioHandler(PIOB, callbacksPioB);
 }
-
+#ifdef ID_PIOC
 extern "C" void PIOC_Handler(void)
 {
 	CommonPioHandler(PIOC, callbacksPioC);
 }
+#endif
 
 #ifdef ID_PIOD
 extern "C" void PIOD_Handler(void)

@@ -47,6 +47,12 @@
 #define  USB_DEVICE_POWER				200				// Consumption on Vbus line (mA)
 #endif
 
+#if SAMG55
+#define  USB_DEVICE_VENDOR_ID			0x1234			// dummy TODO: change to official VID/PID
+#define  USB_DEVICE_PRODUCT_ID			0x5678
+#define  USB_DEVICE_POWER				200				// Consumption on Vbus line (mA)
+#endif
+
 #define  USB_DEVICE_MAJOR_VERSION         1
 #define  USB_DEVICE_MINOR_VERSION         0
 #define  USB_DEVICE_ATTR                  (USB_CONFIG_ATTR_SELF_POWERED)

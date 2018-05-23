@@ -84,12 +84,12 @@ typedef void (*voidFuncPtr)(void) ;
 typedef enum _EPWMChannel
 {
   NOT_ON_PWM=-1,
-  PWM_CH0=0,
-  PWM_CH1,
-  PWM_CH2,
-  PWM_CH3,
-  PWM_CH4,
-  PWM_CH5,
+  PWM_CH0=0,	//samg55 TC0_TIOA0 -> PA0		CH0
+  PWM_CH1,		//samg55 TC0_TIOA1 -> PA23		CH1
+  PWM_CH2,		//samg55 TC0_TIOA2 -> PA21		CH2
+  PWM_CH3,		//samg55 TC0_TIOB0 -> PA1		CH0
+  PWM_CH4,		//samg55 TC0_TIOB1 -> PA16		CH1
+  PWM_CH5,		//samg55 TC0_TIOB2 -> PA22		CH2
   PWM_CH6,
   PWM_CH7
 } EPWMChannel ;
@@ -97,13 +97,13 @@ typedef enum _EPWMChannel
 // Definitions for TC channels
 typedef enum _ETCChannel
 {
-  NOT_ON_TIMER=-1,
-  TC0_CHA0=0,
-  TC0_CHB0,
-  TC0_CHA1,
-  TC0_CHB1,
-  TC0_CHA2,
-  TC0_CHB2,
+  NOT_ON_TIMER = -1,
+  TC0_CHA0=0,	//samg55 TC0_CH0
+  TC0_CHB0,		//samg55 TC0_CH1
+  TC0_CHA1,		//samg55 TC0_CH2
+  TC0_CHB1,		//samg55 TC1_CH0
+  TC0_CHA2,		//samg55 TC1_CH1
+  TC0_CHB2,		//samg55 TC1_CH2
   TC1_CHA3,
   TC1_CHB3,
   TC1_CHA4,
@@ -116,7 +116,7 @@ typedef enum _ETCChannel
   TC2_CHB7,
   TC2_CHA8,
   TC2_CHB8
-} ETCChannel ;
+} ETCChannel;
 
 #ifdef __cplusplus
 } // extern "C"
@@ -216,4 +216,4 @@ extern const PinDescription g_APinDescription[];
 #include "USB/USBSerial.h"
 #endif
 
-#endif // Arduino_h
+#endif // Core_h

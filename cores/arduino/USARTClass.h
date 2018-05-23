@@ -59,7 +59,6 @@
 #define SERIAL_7S2 USARTClass::Mode_7S2
 #define SERIAL_8S2 USARTClass::Mode_8S2
 
-
 class USARTClass : public UARTClass
 {
   public:
@@ -107,7 +106,6 @@ class USARTClass : public UARTClass
     void begin(const uint32_t dwBaudRate);
     void begin(const uint32_t dwBaudRate, const USARTModes config);
     void begin(const uint32_t dwBaudRate, const UARTModes config);
-
   protected:
     Usart* _pUsart;
 };

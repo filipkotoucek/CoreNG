@@ -12,13 +12,17 @@
 # include "adc/adc.h"
 #elif SAM4E || SAME70
 # include "afec/afec.h"
+#elif SAMG55
+# include "adc2/adc2.h"
 #else
 # error Analog input module not written for this processor
 #endif
 
 #include "pmc/pmc.h"
 
-#if SAM3XA || SAM4S
+#if SAMG55
+const unsigned int numChannels = 8;
+#elif SAM3XA || SAM4S
 const unsigned int numChannels = 16;
 #elif SAM4E
 const unsigned int numChannels = 32;
@@ -73,11 +77,20 @@ void AnalogInInit()
 	adc_configure_trigger(ADC, ADC_TRIG_SW, 0);						// Disable hardware trigger
 	adc_disable_interrupt(ADC, 0xFFFFFFFF);							// Disable all ADC interrupts
 	adc_disable_all_channel(ADC);
+#elif SAMG55
+	adc_config adc_cfg;
+	adc_enable();
+	adc_get_config_defaults(&adc_cfg);
+	adc_init(ADC, &adc_cfg);
+	adc_set_trigger(ADC, ADC_TRIG_SW);
+	adc_disable_interrupt(ADC, ADC_INTERRUPT_ALL);
+	adc_channel_disable(ADC, ADC_CHANNEL_ALL);
 #elif SAM4E || SAME70
 	afec_enable(AFEC0);
 	afec_enable(AFEC1);
 	afec_config cfg;
 	afec_get_config_defaults(&cfg);
+
 
 #if 0	// these are probably not needed, the defaults should be OK
 //	cfg.afec_clock = 2000000UL;						// reduce clock frequency
@@ -109,6 +122,7 @@ void AnalogInEnableChannel(AnalogChannelNumber channel, bool enable)
 			activeChannels |= (1u << channel);
 #if SAM3XA || SAM4S
 			adc_enable_channel(ADC, GetAdcChannel(channel));
+			//adc_channel_enable(ADC, ADC_CHANNEL_1);
 #if SAM4S
 			adc_set_calibmode(ADC);										// auto calibrate at start of next sequence
 #endif
@@ -116,6 +130,8 @@ void AnalogInEnableChannel(AnalogChannelNumber channel, bool enable)
 			{
 				adc_enable_ts(ADC);
 			}
+#elif SAMG55
+			adc_channel_enable(ADC, (adc_channel_num) channel);
 #elif SAM4E || SAME70
 			afec_ch_config cfg;
 			afec_ch_get_config_defaults(&cfg);
@@ -136,6 +152,8 @@ void AnalogInEnableChannel(AnalogChannelNumber channel, bool enable)
 			{
 				adc_disable_ts(ADC);
 			}
+#elif SAMG55
+			adc_channel_disable(ADC, (adc_channel_num) channel);
 #elif SAM4E || SAME70
 			afec_channel_disable(GetAfec(channel), GetAfecChannel(channel));
 #endif
@@ -150,6 +168,8 @@ uint16_t AnalogInReadChannel(AnalogChannelNumber channel)
 	{
 #if SAM3XA || SAM4S
 		return adc_get_channel_value(ADC, GetAdcChannel(channel));
+#elif SAMG55
+		return adc_channel_get_value(ADC, (adc_channel_num) channel);
 #elif SAM4E || SAME70
 		return afec_channel_get_value(GetAfec(channel), GetAfecChannel(channel));
 #endif
@@ -201,6 +221,16 @@ void AnalogInStartConversion(uint32_t channels)
 		}
 	}
 	adc_start(ADC);
+#elif SAMG55
+	// Clear out any existing conversion complete bits in the status register
+	for (uint8_t chan = 0; chan < numChannels; ++chan)
+	{
+		if (adc_channel_get_status(ADC, (adc_channel_num) chan) != 0)
+		{
+			(void)adc_channel_get_value(ADC, (adc_channel_num) chan);
+		}
+	}
+	adc_start_software_conversion(ADC);
 #elif SAM4E
 	channels &= activeChannels;
 	if ((channels & 0x0000FFFF) != 0)
@@ -236,6 +266,9 @@ bool AnalogInCheckReady(uint32_t channels)
 	const uint32_t afec1Mask = (channels >> 16) & 0x0000FFFF;
 	return (afec_get_interrupt_status(AFEC0) & afec0Mask) == afec0Mask
 		&& (afec_get_interrupt_status(AFEC1) & afec1Mask) == afec1Mask;
+#elif SAMG55
+	//TODO: implement this function
+	while(true);
 #elif SAME70
 	channels &= activeChannels;
 	const uint32_t afec0Mask = channels & 0x000003FF;
@@ -243,6 +276,7 @@ bool AnalogInCheckReady(uint32_t channels)
 	return (afec_get_interrupt_status(AFEC0) & afec0Mask) == afec0Mask
 		&& (afec_get_interrupt_status(AFEC1) & afec1Mask) == afec1Mask;
 #endif
+	return false;
 }
 
 // Convert an Arduino Due analog pin number to the corresponding ADC channel number
@@ -266,6 +300,7 @@ AnalogChannelNumber GetTemperatureAdcChannel()
 #elif SAM3XA || SAM4S
 	return static_cast<AnalogChannelNumber>(ADC_TEMPERATURE_SENSOR);
 #endif
+	return NO_ADC;
 }
 
 // End

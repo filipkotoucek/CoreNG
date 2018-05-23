@@ -25,7 +25,15 @@
 
 #if SAME70
 // TWI disabled for now
-#else
+#else //SAME70
+
+#if SAMG55
+// Include Atmel CMSIS driver
+//#include "sam/drivers/twi/twi.h"
+//#include "sam/drivers/pmc/pmc.h"
+//#define PIO_Configure pio_configure
+#endif //SAMG55
+
 
 #include "Stream.h"
 #include "variant.h"
@@ -110,7 +118,7 @@ extern TwoWire Wire;
 extern TwoWire Wire1;
 #endif
 
-#endif
+#endif //SAME70
 
-#endif
+#endif //TwoWire_h
 

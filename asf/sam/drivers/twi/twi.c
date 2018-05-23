@@ -85,7 +85,7 @@ extern "C" {
 #define TWI_CLK_CALC_ARGU    3
 #else
 #define TWI_CLK_CALC_ARGU    4
-#endif	
+#endif //SAMG55
 #define TWI_CLK_DIV_MAX      0xFF
 #define TWI_CLK_DIV_MIN      7
 

@@ -16,46 +16,49 @@
 
 #if SAM4E
 
-#define USART_SPI		1
+	#define USART_SPI		1
+	#include "usart/usart.h"		// On Duet NG the general SPI channel is on USART 0
 
-# include "usart/usart.h"		// On Duet NG the general SPI channel is on USART 0
-
-#  define USART_SSPI	USART0
-#  define ID_SSPI		ID_USART0
+	#define USART_SSPI	USART0
+	#define ID_SSPI		ID_USART0
 
 #elif SAM4S
 
-#define USART_SPI		1
+	#define USART_SPI		1
+	#include "usart/usart.h"		// On Duet Maestro the general SPI channel is on USART 0
 
-# include "usart/usart.h"		// On Duet Maestro the general SPI channel is on USART 0
+	#define USART_SSPI	USART0
+	#define ID_SSPI		ID_USART0
 
-#  define USART_SSPI	USART0
-#  define ID_SSPI		ID_USART0
+#else //SAM4E
 
-#else
+	#define USART_SPI		0
 
-#define USART_SPI		0
-
-// We have to tell the processor which NPCS output we are using, even though we use other pins for CS
-#if SAME70
-// We choose NPCS2 because on the SAME70, it is not physically connected
-# define PERIPHERAL_CHANNEL_ID		2
-# define PERIPHERAL_CHANNEL_CS_PIN	APIN_SPI_SS2
-#elif SAM3XA
-// We choose NPCS3 because on the SAM3X, it is not physically connected
-# define PERIPHERAL_CHANNEL_ID		3
-# define PERIPHERAL_CHANNEL_CS_PIN	APIN_SPI_SS3
-#endif
+	// We have to tell the processor which NPCS output we are using, even though we use other pins for CS
+	#if SAME70
+		// We choose NPCS2 because on the SAME70, it is not physically connected
+		# define PERIPHERAL_CHANNEL_ID		2
+		# define PERIPHERAL_CHANNEL_CS_PIN	APIN_SPI_SS2
+	#elif SAM3XA
+		// We choose NPCS3 because on the SAM3X, it is not physically connected
+		# define PERIPHERAL_CHANNEL_ID		3
+		# define PERIPHERAL_CHANNEL_CS_PIN	APIN_SPI_SS3
+	#endif //SAME70
 
 
-/** Time-out value (number of attempts). */
-#define SPI_TIMEOUT       15000
+	/** Time-out value (number of attempts). */
+	#define SPI_TIMEOUT       15000
 
-// Which SPI channel we use
-# define SSPI		SPI0
-# define ID_SSPI	ID_SPI0
-
-#endif
+	// Which SPI channel we use
+	#define SSPI		SPI7
+	#if SAMG55
+		#define ID_SSPI	APIN_SPI_INTERFACE_ID
+		#define PERIPHERAL_CHANNEL_ID		0
+		#define PERIPHERAL_CHANNEL_CS_PIN	APIN_SPI_SS0
+	#else
+		#define ID_SSPI	ID_SPI0
+	#endif
+#endif //SAM4E
 
 // Lock for the SPI subsystem
 static bool sspiLocked = false;

@@ -19,9 +19,83 @@
 #include "Core.h"
 #include "AnalogOut.h"
 
-#include "pwm/pwm.h"
 #include "tc/tc.h"
+#if SAMG55
+#include "sysclk.h"
+#else
+#include "pwm/pwm.h"
 #include "dacc/dacc.h"
+#endif
+
+#if SAM4S || SAMG55
+const unsigned int numTcChannels = 6;
+#elif SAM3XA || SAM4E
+const unsigned int numTcChannels = 9;
+#elif SAME70
+const unsigned int numTcChannels = 12;
+#endif
+
+// Map from timer channel to TC channel number
+static const uint8_t channelToChNo[numTcChannels] =
+{
+	0, 1, 2,
+	0, 1, 2,
+#if SAME70
+	0, 1, 2,
+	0, 1, 2
+#endif
+#if SAM3XA || SAM4E
+	0, 1, 2
+#endif
+};
+
+// Map from timer channel to TC number
+static Tc * const channelToTC[numTcChannels] =
+{
+	TC0, TC0, TC0,
+	TC1, TC1, TC1,
+#if SAME70
+	TC2, TC2, TC2,
+	TC3, TC3, TC3
+#endif
+#if SAM3XA || SAM4E
+	TC2, TC2, TC2
+#endif
+};
+
+// Map from timer channel to TIO number
+static const uint8_t channelToId[numTcChannels] =
+{
+	ID_TC0, ID_TC1, ID_TC2,
+	ID_TC3, ID_TC4, ID_TC5,
+#if SAME70
+	ID_TC6, ID_TC7, ID_TC8,
+	ID_TC9, ID_TC10, ID_TC11
+#endif
+#if SAM3XA || SAM4E
+	ID_TC6, ID_TC7, ID_TC8
+#endif
+};
+
+// Current frequency of each TC channel
+static uint16_t TCChanFreq[numTcChannels] = {0};
+
+#if SAM3XA || SAME70
+const unsigned int numPwmChannels = 8;
+#elif SAMG55
+const unsigned int numPwmChannels = 6;
+// value of RC register in timer. When timer hits this value it clears itself and starts again
+#define PWM_RC_VAL VARIANT_MCK / PWM_FREQ
+#elif SAM4E || SAM4S
+const unsigned int numPwmChannels = 4;
+#endif
+
+static bool PWMEnabled = false;
+static uint16_t PWMChanFreq[numPwmChannels] = {0};
+static uint16_t PWMChanPeriod[numPwmChannels];
+
+//***Temporary for debugging
+uint32_t maxPwmLoopCount = 0;
 
 // Initialise this module
 extern void AnalogOutInit()
@@ -43,6 +117,10 @@ static bool AnalogWriteDac(const PinDescription& pinDesc, float ulValue)
 pre(0.0 <= ulValue; ulValue <= 1.0)
 pre((pinDesc.ulPinAttribute & PIN_ATTR_DAC) != 0)
 {
+#if SAMG55
+	//NOT SUPPORTED BY SILICON
+	while(true);
+#else //SAMG55
 	const AnalogChannelNumber channel = pinDesc.ulADCChannelNumber;
 	const uint32_t chDACC = ((channel == DA0) ? 0 : 1);
 	if (dacc_get_channel_status(DACC) == 0)
@@ -95,20 +173,8 @@ pre((pinDesc.ulPinAttribute & PIN_ATTR_DAC) != 0)
 	while ((dacc_get_interrupt_status(DACC) & DACC_ISR_EOC) == 0) {}
 #endif
 	return true;
+#endif //SAMG55
 }
-
-#if SAM3XA || SAME70
-const unsigned int numPwmChannels = 8;
-#elif SAM4E || SAM4S
-const unsigned int numPwmChannels = 4;
-#endif
-
-static bool PWMEnabled = false;
-static uint16_t PWMChanFreq[numPwmChannels] = {0};
-static uint16_t PWMChanPeriod[numPwmChannels];
-
-//***Temporary for debugging
-uint32_t maxPwmLoopCount = 0;
 
 // AnalogWrite to a PWM pin
 // Return true if successful, false if we need to fall back to digitalWrite
@@ -122,6 +188,52 @@ pre((pinDesc.ulPinAttribute & PIN_ATTR_PWM) != 0)
 		PWMChanFreq[chan] = freq;
 		return false;
 	}
+
+#if SAMG55
+	// Only TC0 is capable of PWM output due to only TC0 has outputs connected to pads.
+		// Frequency of PWM is hard set and the parameter passed to this function is ignored.
+		// Pads must be initiated at the startup by ioport_set_pin_mode(PIN_TC_WAVEFORM, PIN_TC_WAVEFORM_MUX); ioport_disable_pin(PIN_TC_WAVEFORM);
+
+		// PWM initialization runs first when this function is called. Next calls just changes duty cycle
+		// Enable PCK output. PCK3 is used as clock source for PWM output.
+		// Set PCK3 to 25 kHz = 120 MHz (PPLA) / 1
+		if(!PWMEnabled)
+		{
+			// Configure the PMC to enable the TC module.
+			sysclk_enable_peripheral_clock(ID_TC0);
+			pmc_disable_pck(PMC_PCK_3);
+			pmc_switch_pck_to_pllack(PMC_PCK_3, PMC_PCK_PRES(0));
+			pmc_enable_pck(PMC_PCK_3);
+
+			// Initialize timer to generate PWM for all channels
+			for(uint8_t i = 0; i < numPwmChannels; i++)
+			{
+				// Init TC to waveform mode.
+				tc_init(TC0, channelToChNo[i],
+					TC_CMR_TCCLKS_TIMER_CLOCK5 		// Waveform Clock Selection
+					| TC_CMR_WAVE       			// Waveform mode is enabled
+					| TC_CMR_ACPA_SET   			// RA Compare Effect: set
+					| TC_CMR_ACPC_CLEAR 			// RC Compare Effect: clear
+					| TC_CMR_CPCTRG     			// UP mode with automatic trigger on RC Compare
+				);
+				// Configure waveform frequency and duty cycle.
+				tc_write_rc(TC0, channelToChNo[i], PWM_RC_VAL);
+			}
+			PWMEnabled = true;
+		}
+
+		//calculate duty cycle from input float ulValue. Duty is percentage of RC valu
+		uint32_t duty = PWM_RC_VAL * (uint32_t) ulValue;
+		//remap channel from variant.h definitions to real timer channel
+		uint8_t hwPwmChannel = channelToChNo[chan];
+
+		//write duty values to current channel. Pins must be enabled and configured before calling this function
+		if(chan > PWM_CH2) TC0->TC_CHANNEL[hwPwmChannel].TC_RB = duty;
+		else TC0->TC_CHANNEL[hwPwmChannel].TC_RA = duty;
+
+		// Enable channel
+		TC0->TC_CHANNEL[hwPwmChannel].TC_CCR = TC_CCR_CLKEN | TC_CCR_SWTRG;
+#else	//SAMG55
 
 	// Which PWM interface do we need to work with?
 #if SAME70
@@ -220,61 +332,9 @@ pre((pinDesc.ulPinAttribute & PIN_ATTR_PWM) != 0)
 		channelConfig.ul_period = (uint32_t)PWMChanPeriod[chan];
 		pwm_channel_update_duty(PWMInterface, &channelConfig, ConvertRange(ulValue, channelConfig.ul_period));
 	}
+#endif	//SAMG55
 	return true;
 }
-
-#if SAM4S
-const unsigned int numTcChannels = 6;
-#elif SAM3XA || SAM4E
-const unsigned int numTcChannels = 9;
-#elif SAME70
-const unsigned int numTcChannels = 12;
-#endif
-
-// Map from timer channel to TC channel number
-static const uint8_t channelToChNo[numTcChannels] =
-{
-	0, 1, 2,
-	0, 1, 2,
-#if SAME70
-	0, 1, 2,
-	0, 1, 2
-#endif
-#if SAM3XA || SAM4E
-	0, 1, 2
-#endif
-};
-
-// Map from timer channel to TC number
-static Tc * const channelToTC[numTcChannels] =
-{
-	TC0, TC0, TC0,
-	TC1, TC1, TC1,
-#if SAME70
-	TC2, TC2, TC2,
-	TC3, TC3, TC3
-#endif
-#if SAM3XA || SAM4E
-	TC2, TC2, TC2
-#endif
-};
-
-// Map from timer channel to TIO number
-static const uint8_t channelToId[numTcChannels] =
-{
-	ID_TC0, ID_TC1, ID_TC2,
-	ID_TC3, ID_TC4, ID_TC5,
-#if SAME70
-	ID_TC6, ID_TC7, ID_TC8,
-	ID_TC9, ID_TC10, ID_TC11
-#endif
-#if SAM3XA || SAM4E
-	ID_TC6, ID_TC7, ID_TC8
-#endif
-};
-
-// Current frequency of each TC channel
-static uint16_t TCChanFreq[numTcChannels] = {0};
 
 static inline void TC_SetCMR_ChannelA(Tc *tc, uint32_t chan, uint32_t v)
 {
@@ -295,11 +355,17 @@ static inline void TC_WriteCCR(Tc *tc, uint32_t chan, uint32_t v)
 // Return true if successful, false if we need to fall back to digitalWrite
 // WARNING: this will screw up big time if you try to use both the A and B outputs of the same timer at different frequencies.
 // The DuetNG board uses only A outputs, so this is OK.
+// Note for samg55. Only TC1 usable as timer. (TC1_CHA3, TC1_CHB3 and TC1_CHA4). TC0 is used for PWM.
 static bool AnalogWriteTc(const PinDescription& pinDesc, float ulValue, uint16_t freq)
 pre(0.0 <= ulValue; ulValue <= 1.0)
 pre((pinDesc.ulPinAttribute & PIN_ATTR_TIMER) != 0)
 {
 	const uint32_t chan = (uint32_t)pinDesc.ulTCChannel >> 1;
+
+#if SAMG55
+	if(chan > TC0_CHB2) while(true);	//unsupported TC selected
+#endif //SAMG55
+
 	if (freq == 0)
 	{
 		TCChanFreq[chan] = freq;
@@ -347,10 +413,13 @@ pre((pinDesc.ulPinAttribute & PIN_ATTR_TIMER) != 0)
 			// When using TC channels to do PWM control of heaters with active low outputs on the Duet WiFi, if we don't take precautions
 			// then we get a glitch straight after initialising the channel, because the compare output starts in the low state.
 			// To avoid that, set the output high here if a high PWM was requested.
+#if SAMG55
+#else
 			if (ulValue >= 0.5)
 			{
 				TC_WriteCCR(chTC, chan, TC_CCR_SWTRG);
 			}
+#endif //SAMG55
 		}
 
 		const uint32_t threshold = ConvertRange(ulValue, tc_read_rc(chTC, chNo));
@@ -396,10 +465,7 @@ pre((pinDesc.ulPinAttribute & PIN_ATTR_TIMER) != 0)
 // will re-initialise it. The pinMode function relies on this.
 void AnalogOut(Pin pin, float ulValue, uint16_t freq)
 {
-	if (pin > MaxPinNumber || std::isnan(ulValue))
-	{
-		return;
-	}
+	if (pin > MaxPinNumber || std::isnan(ulValue)) return;
 
 	ulValue = constrain<float>(ulValue, 0.0, 1.0);
 
@@ -407,24 +473,15 @@ void AnalogOut(Pin pin, float ulValue, uint16_t freq)
 	const uint32_t attr = pinDesc.ulPinAttribute;
 	if ((attr & PIN_ATTR_DAC) != 0)
 	{
-		if (AnalogWriteDac(pinDesc, ulValue))
-		{
-			return;
-		}
+		if (AnalogWriteDac(pinDesc, ulValue)) return;
 	}
 	else if ((attr & PIN_ATTR_PWM) != 0)
 	{
-		if (AnalogWritePwm(pinDesc, ulValue, freq))
-		{
-			return;
-		}
+		if (AnalogWritePwm(pinDesc, ulValue, freq)) return;
 	}
 	else if ((attr & PIN_ATTR_TIMER) != 0)
 	{
-		if (AnalogWriteTc(pinDesc, ulValue, freq))
-		{
-			return;
-		}
+		if (AnalogWriteTc(pinDesc, ulValue, freq)) return;
 	}
 
 	// Fall back to digital write

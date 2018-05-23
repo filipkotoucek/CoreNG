@@ -270,8 +270,11 @@ void TwoWire::begin(void) {
 		onBeginCallback();
 
 	// Disable PDC channel
+#if SAMG55
+	twi->TWI_PTCR = US_PTCR_RXTDIS | US_PTCR_TXCBDIS;
+#else
 	twi->TWI_PTCR = UART_PTCR_RXTDIS | UART_PTCR_TXTDIS;
-
+#endif
 	TWI_ConfigureMaster(twi, TWI_CLOCK, VARIANT_MCK);
 	status = MASTER_IDLE;
 }
@@ -283,7 +286,11 @@ void TwoWire::begin(uint8_t address) {
 	}
 
 	// Disable PDC channel
+#if SAMG55
+	twi->TWI_PTCR = US_PTCR_RXTDIS | US_PTCR_TXCBDIS;
+#else
 	twi->TWI_PTCR = UART_PTCR_RXTDIS | UART_PTCR_TXTDIS;
+#endif
 
 	twi_slave_init(twi, address);
 	status = SLAVE_IDLE;

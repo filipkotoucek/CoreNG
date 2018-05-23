@@ -71,8 +71,8 @@
 # include "sam4l/osc.h"
 #elif SAM4N
 # include "sam4n/osc.h"
-#elif SAMG
-# include "samg/osc.h"
+#elif SAMG55
+# include "samg55/osc.h"
 #elif SAMV71
 # include "samv71/osc.h"
 #elif SAMV70

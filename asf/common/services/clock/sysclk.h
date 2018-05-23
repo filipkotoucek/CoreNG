@@ -71,8 +71,8 @@
 # include "sam4l/sysclk.h"
 #elif SAM4N
 # include "sam4n/sysclk.h"
-#elif SAMG
-# include "samg/sysclk.h"
+#elif SAMG55
+# include "samg55/sysclk.h"
 #elif SAMV71
 # include "samv71/sysclk.h"
 #elif SAMV70

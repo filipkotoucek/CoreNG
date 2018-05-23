@@ -71,8 +71,8 @@
 # include "sam4l/pll.h"
 #elif SAM4N
 # include "sam4n/pll.h"
-#elif SAMG
-# include "samg/pll.h"
+#elif SAMG55
+# include "samg55/pll.h"
 #elif SAMV71
 # include "samv71/pll.h"
 #elif SAMV70

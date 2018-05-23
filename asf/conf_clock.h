@@ -79,7 +79,11 @@
 
 // ===== PLL0 (A) Options   (Fpll = (Fclk * PLL_mul) / PLL_div)
 // Use mul and div effective values here.
+#if SAMG55
+#define CONFIG_PLL0_SOURCE			PLL_SRC_SLCK_RC
+#else
 #define CONFIG_PLL0_SOURCE          PLL_SRC_MAINCK_XTAL
+#endif
 
 #if SAM4E || SAM4S
 # define CONFIG_PLL0_MUL			20		// (20 * 12)/2 = 120MHz
@@ -87,6 +91,8 @@
 # define CONFIG_PLL0_MUL			14		// (14 * 12)/2 = 84MHz
 #elif SAME70
 #define CONFIG_PLL0_MUL             25		// (25 * 12)/1 = 300MHz
+#elif SAMG55
+#define CONFIG_PLL0_MUL             3662	// (3662 * 32768 kHz)/1 = 199.99 MHz
 #endif
 
 #define CONFIG_PLL0_DIV				1
