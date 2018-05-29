@@ -85,6 +85,17 @@
 
 #define SD_MMC_WP_DETECT_VALUE		false
 
+#elif defined(__SAMG55J19__)
+
+#define SD_MMC_HSMCI_MEM_CNT		0			// Number of HSMCI card slots supported
+#define SD_MMC_SPI_MEM_CNT			1			// Number of SPI card slots supported
+//#define SD_MMC_SPI_DEBUG
+
+#define SD_MMC_SPI_MAX_CLOCK		(24000000)	// Max 20MHz clock for onboard SPI cards
+
+#define SD_MMC_WP_DETECT_VALUE		false
+
+
 
 #else
 

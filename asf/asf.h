@@ -42,7 +42,7 @@
 #include "sam/drivers/rswdt/rswdt.h"
 #endif
 
-#if SAM4E || SAM4S || SAME70
+#if SAM4E || SAM4S || SAME70 || SAMG55
 #include "sam/services/flash_efc/flash_efc.h"
 #endif
 

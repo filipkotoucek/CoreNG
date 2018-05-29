@@ -50,12 +50,13 @@
 	#define SPI_TIMEOUT       15000
 
 	// Which SPI channel we use
-	#define SSPI		SPI7
 	#if SAMG55
+		#define SSPI		SPI7
 		#define ID_SSPI	APIN_SPI_INTERFACE_ID
 		#define PERIPHERAL_CHANNEL_ID		0
 		#define PERIPHERAL_CHANNEL_CS_PIN	APIN_SPI_SS0
 	#else
+		#define SSPI		SPI0
 		#define ID_SSPI	ID_SPI0
 	#endif
 #endif //SAM4E

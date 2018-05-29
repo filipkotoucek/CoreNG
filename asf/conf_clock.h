@@ -60,7 +60,7 @@
 //#define CONFIG_SYSCLK_SOURCE        SYSCLK_SRC_UPLLCK
 
 // ===== System Clock (MCK) Prescaler Options   (Fmck = Fsys / (SYSCLK_PRES))
-#if SAME70
+#if SAME70 || SAMG55
 # define CONFIG_SYSCLK_PRES         SYSCLK_PRES_1
 #else
 # define CONFIG_SYSCLK_PRES         SYSCLK_PRES_2
@@ -81,6 +81,7 @@
 // Use mul and div effective values here.
 #if SAMG55
 #define CONFIG_PLL0_SOURCE			PLL_SRC_SLCK_RC
+#define CONFIG_PLL1_SOURCE			PLL_SRC_SLCK_RC
 #else
 #define CONFIG_PLL0_SOURCE          PLL_SRC_MAINCK_XTAL
 #endif
@@ -92,10 +93,13 @@
 #elif SAME70
 #define CONFIG_PLL0_MUL             25		// (25 * 12)/1 = 300MHz
 #elif SAMG55
-#define CONFIG_PLL0_MUL             3662	// (3662 * 32768 kHz)/1 = 199.99 MHz
+#define CONFIG_PLL0_MUL             3750	// (3662 * 32768 kHz)/1 = 199.99 MHz
+#define CONFIG_PLL1_MUL             1500	// (3662 * 32768 kHz)/1 = 199.99 MHz
+#define CONFIG_PLL1_DIV				1
 #endif
 
 #define CONFIG_PLL0_DIV				1
+
 
 
 // ===== UPLL (UTMI) Hardware fixed at 480 MHz.
@@ -105,6 +109,9 @@
 #if SAM4E || SAM4S
 # define CONFIG_USBCLK_SOURCE       USBCLK_SRC_PLL0
 # define CONFIG_USBCLK_DIV          5
+#elif SAMG55
+# define CONFIG_USBCLK_SOURCE       USBCLK_SRC_PLL1
+# define CONFIG_USBCLK_DIV          1
 #elif SAM3XA || SAME70
 # define CONFIG_USBCLK_SOURCE       USBCLK_SRC_UPLL
 # define CONFIG_USBCLK_DIV          1
