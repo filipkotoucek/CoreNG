@@ -29,6 +29,13 @@
 
 #include "samg55.h"
 
+// Eclipse doesn't get the state of __FPU_USED right
+#if __FPU_USED /* CMSIS defined value to indicate usage of FPU */
+#include "fpu/fpu.h"
+#else
+# warning Compiling without FPU support
+#endif
+
 /* Initialize segments */
 extern uint32_t _sfixed;
 extern uint32_t _efixed;
@@ -183,7 +190,7 @@ const DeviceVectors exception_table = {
  */
 void Reset_Handler(void)
 {
-        uint32_t *pSrc, *pDest;
+        volatile uint32_t *pSrc, *pDest;
 
         /* Initialize the relocate segment */
         pSrc = &_etext;
@@ -206,6 +213,12 @@ void Reset_Handler(void)
 
         /* Initialize the C library */
         __libc_init_array();
+
+#if __FPU_USED
+	fpu_enable();
+#else
+# warning Compiling without FPU support
+#endif
 
         /* Branch to main function */
         main();

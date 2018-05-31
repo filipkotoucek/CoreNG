@@ -147,7 +147,7 @@
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.471788573" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/CoreNG}/Release" id="cdt.managedbuild.builder.gnu.cross.1120505592" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.326515188" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
-								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.965737206" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.c.optimization.level.more" valueType="enumerated"/>
+								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.965737206" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.c.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.debugging.level.872257797" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.471094812" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__SAM4E8E__"/>
@@ -186,7 +186,7 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1806524910" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.1042598993" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
-								<option id="gnu.cpp.compiler.option.optimization.level.354399219" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.more" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.optimization.level.354399219" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.debugging.level.1155085380" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1397828295" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__SAM4E8E__"/>
@@ -723,8 +723,8 @@
 							<targetPlatform archList="all" binaryParser="org.eclipse.cdt.core.ELF" id="cdt.managedbuild.targetPlatform.gnu.cross.1442027753" isAbstract="false" osList="all" superClass="cdt.managedbuild.targetPlatform.gnu.cross"/>
 							<builder buildPath="${workspace_loc:/CoreNG}/Release" id="cdt.managedbuild.builder.gnu.cross.826960836" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="Gnu Make Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="cdt.managedbuild.builder.gnu.cross"/>
 							<tool id="cdt.managedbuild.tool.gnu.cross.c.compiler.484923143" name="Cross GCC Compiler" superClass="cdt.managedbuild.tool.gnu.cross.c.compiler">
-								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.1554707737" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.c.optimization.level.more" valueType="enumerated"/>
-								<option id="gnu.c.compiler.option.debugging.level.427156490" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.none" valueType="enumerated"/>
+								<option defaultValue="gnu.c.optimization.level.most" id="gnu.c.compiler.option.optimization.level.1554707737" name="Optimization Level" superClass="gnu.c.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.c.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.c.compiler.option.debugging.level.427156490" name="Debug Level" superClass="gnu.c.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.c.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.c.compiler.option.preprocessor.def.symbols.1008460396" name="Defined symbols (-D)" superClass="gnu.c.compiler.option.preprocessor.def.symbols" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__SAMG55J19__"/>
 									<listOptionValue builtIn="false" value="UDD_ENABLE"/>
@@ -736,6 +736,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/header_files}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/preprocessor}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/cmsis/samg55/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/drivers}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/drivers/dmac}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/drivers/efc}&quot;"/>
@@ -755,7 +756,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/common/services/usb/class/cdc}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/common/services/usb/class/cdc/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/thirdparty/CMSIS/Include}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/cmsis/samg55/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/variants/samg55}&quot;"/>
 								</option>
 								<option id="gnu.c.compiler.option.misc.other.1964309995" name="Other flags" superClass="gnu.c.compiler.option.misc.other" useByScannerDiscovery="false" value="-c -std=gnu99 -fmax-errors=10 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections -nostdlib -Wdouble-promotion -fsingle-precision-constant &quot;-Wa,-ahl=$*.s&quot;" valueType="string"/>
@@ -763,8 +763,8 @@
 								<inputType id="cdt.managedbuild.tool.gnu.c.compiler.input.1109066183" superClass="cdt.managedbuild.tool.gnu.c.compiler.input"/>
 							</tool>
 							<tool id="cdt.managedbuild.tool.gnu.cross.cpp.compiler.551088057" name="Cross G++ Compiler" superClass="cdt.managedbuild.tool.gnu.cross.cpp.compiler">
-								<option id="gnu.cpp.compiler.option.optimization.level.1311969656" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.more" valueType="enumerated"/>
-								<option id="gnu.cpp.compiler.option.debugging.level.13890501" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.optimization.level.1311969656" name="Optimization Level" superClass="gnu.cpp.compiler.option.optimization.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.optimization.level.none" valueType="enumerated"/>
+								<option id="gnu.cpp.compiler.option.debugging.level.13890501" name="Debug Level" superClass="gnu.cpp.compiler.option.debugging.level" useByScannerDiscovery="false" value="gnu.cpp.compiler.debugging.level.max" valueType="enumerated"/>
 								<option id="gnu.cpp.compiler.option.preprocessor.def.1722897654" name="Defined symbols (-D)" superClass="gnu.cpp.compiler.option.preprocessor.def" useByScannerDiscovery="false" valueType="definedSymbols">
 									<listOptionValue builtIn="false" value="__SAMG55J19__"/>
 									<listOptionValue builtIn="false" value="UDD_ENABLE"/>
@@ -776,6 +776,7 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/header_files}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/preprocessor}&quot;"/>
+									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/cmsis/samg55/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/drivers}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/common/utils}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/common/services/clock}&quot;"/>
@@ -786,7 +787,6 @@
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/common/services/usb/class/cdc/device}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/thirdparty/CMSIS/Include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/libraries/Storage}&quot;"/>
-									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/asf/sam/utils/cmsis/samg55/include}&quot;"/>
 									<listOptionValue builtIn="false" value="&quot;${workspace_loc:/${ProjName}/variants/samg55}&quot;"/>
 								</option>
 								<option id="gnu.cpp.compiler.option.other.other.1143813622" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -std=gnu++14 -fmax-errors=10 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -ffunction-sections -fdata-sections -fno-threadsafe-statics -fno-rtti -fno-exceptions -nostdlib -Wdouble-promotion -fsingle-precision-constant &quot;-Wa,-ahl=$*.s&quot;" valueType="string"/>
@@ -801,7 +801,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="asf/sam/drivers/uart|asf/sam/drivers/gmac|asf/sam/drivers/mpu|asf/common/services/usb/uhc|asf/sam/drivers/usbhs|asf/common/services/clock/same70|asf/sam/drivers/dacc|asf/sam/drivers/twihs|variants/same70|variants/sam4s|variants/alligator|variants/RADDS|asf/common/services/spi|asf/common/drivers/nvm|asf/common/services/clock/sam3s|asf/common/services/clock/sam3x|asf/common/services/clock/sam4s|asf/common/services/usb/class/composite|asf/common/services/usb/class/dfu_flip|asf/common/services/usb/class/hid|asf/common/services/usb/class/msc|asf/common/services/usb/class/phdc|asf/common/services/usb/class/aoa|asf/common/services/serial|asf/common/services/delay|asf/common/services/fifo|asf/common/services/crc32|asf/common/services/adp|asf/common/utils/stdio|asf/common/utils/osprintf|asf/common/utils/membag|asf/sam/components/ethernet_phy|asf/sam/drivers/acc|asf/sam/drivers/aes|asf/sam/drivers/crccu|asf/sam/drivers/adc|asf/sam/drivers/emac|asf/sam/drivers/trng|asf/sam/drivers/uotghs|asf/sam/drivers/xdmac|asf/sam/utils/cmsis/samv70|asf/sam/utils/cmsis/sams70|asf/sam/utils/cmsis/same70|asf/sam/utils/cmsis/sam4s|asf/sam/utils/cmsis/sam4n|asf/sam/utils/cmsis/sam4l|asf/sam/utils/cmsis/sam4cp|asf/sam/utils/cmsis/sam4cm32|asf/sam/utils/cmsis/sam4cm|asf/sam/utils/cmsis/samv71|asf/sam/utils/cmsis/sam4c|asf/sam/utils/cmsis/sam3x|asf/sam/utils/cmsis/sam3u|asf/sam/utils/cmsis/sam3s8|asf/sam/utils/cmsis/sam3s|asf/sam/utils/cmsis/sam3n|libraries/SPI|libraries/HID|variants/duet|variants/duetNG|asf/sam/utils/cmsis/sam4e|asf/common/services/clock/sam4e|asf/sam/drivers/rswdt|asf/sam/drivers/pwm|asf/sam/drivers/mcan|asf/sam/drivers/hsmci|asf/sam/drivers/dmac|asf/sam/drivers/can|asf/sam/drivers/afec" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
+						<entry excluding="variants/samg55/exceptions.c|asf/sam/drivers/uart|asf/sam/drivers/gmac|asf/sam/drivers/mpu|asf/common/services/usb/uhc|asf/sam/drivers/usbhs|asf/common/services/clock/same70|asf/sam/drivers/dacc|asf/sam/drivers/twihs|variants/same70|variants/sam4s|variants/alligator|variants/RADDS|asf/common/services/spi|asf/common/drivers/nvm|asf/common/services/clock/sam3s|asf/common/services/clock/sam3x|asf/common/services/clock/sam4s|asf/common/services/usb/class/composite|asf/common/services/usb/class/dfu_flip|asf/common/services/usb/class/hid|asf/common/services/usb/class/msc|asf/common/services/usb/class/phdc|asf/common/services/usb/class/aoa|asf/common/services/serial|asf/common/services/delay|asf/common/services/fifo|asf/common/services/crc32|asf/common/services/adp|asf/common/utils/stdio|asf/common/utils/osprintf|asf/common/utils/membag|asf/sam/components/ethernet_phy|asf/sam/drivers/acc|asf/sam/drivers/aes|asf/sam/drivers/crccu|asf/sam/drivers/adc|asf/sam/drivers/emac|asf/sam/drivers/trng|asf/sam/drivers/uotghs|asf/sam/drivers/xdmac|asf/sam/utils/cmsis/samv70|asf/sam/utils/cmsis/sams70|asf/sam/utils/cmsis/same70|asf/sam/utils/cmsis/sam4s|asf/sam/utils/cmsis/sam4n|asf/sam/utils/cmsis/sam4l|asf/sam/utils/cmsis/sam4cp|asf/sam/utils/cmsis/sam4cm32|asf/sam/utils/cmsis/sam4cm|asf/sam/utils/cmsis/samv71|asf/sam/utils/cmsis/sam4c|asf/sam/utils/cmsis/sam3x|asf/sam/utils/cmsis/sam3u|asf/sam/utils/cmsis/sam3s8|asf/sam/utils/cmsis/sam3s|asf/sam/utils/cmsis/sam3n|libraries/SPI|libraries/HID|variants/duet|variants/duetNG|asf/sam/utils/cmsis/sam4e|asf/common/services/clock/sam4e|asf/sam/drivers/rswdt|asf/sam/drivers/pwm|asf/sam/drivers/mcan|asf/sam/drivers/hsmci|asf/sam/drivers/dmac|asf/sam/drivers/can|asf/sam/drivers/afec" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
