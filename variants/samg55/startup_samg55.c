@@ -47,11 +47,14 @@ extern uint32_t _ezero;
 extern uint32_t _sstack;
 extern uint32_t _estack;
 
+extern void TimeTick_Increment(void);				// in wiring.c
+extern int sysTickHook(void);
+
 /** \cond DOXYGEN_SHOULD_SKIP_THIS */
 int main(void);
 /** \endcond */
 
-void __libc_init_array(void);
+//void __libc_init_array(void);
 
 /* Default empty handler */
 void Dummy_Handler(void);
@@ -65,7 +68,15 @@ void UsageFault_Handler ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void SVC_Handler        ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void DebugMon_Handler   ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
 void PendSV_Handler     ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
-void SysTick_Handler    ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
+
+void SysTick_Handler(void)
+{
+	if (sysTickHook())
+		return;
+
+	wdt_restart(WDT);							// kick the watchdog
+	TimeTick_Increment();						// increment tick count each ms
+}
 
 /* Peripherals handlers */
 void SUPC_Handler    ( void ) __attribute__ ((weak, alias("Dummy_Handler")));
@@ -212,7 +223,7 @@ void Reset_Handler(void)
         SCB->VTOR = ((uint32_t) pSrc & SCB_VTOR_TBLOFF_Msk);
 
         /* Initialize the C library */
-        __libc_init_array();
+        //__libc_init_array();
 
 #if __FPU_USED
 	fpu_enable();

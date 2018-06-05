@@ -30,6 +30,7 @@
  * Pins 200-215	IO0-IO15 on the SX1509B port expander on the DueXn
  */
 
+
 /*
  * Pins descriptions
  */

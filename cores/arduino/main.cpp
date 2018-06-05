@@ -28,7 +28,6 @@ int main( void )
 	// We no longer initialise the watchdog here, for two reasons:
 	// 1. So that the application can set up a shorter watchdog timeout, after it has finished initialising.
 	// 2. To force the application to set up the watchdog.
-	
 	init();
 
 	delay(1);

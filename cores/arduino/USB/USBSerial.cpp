@@ -145,6 +145,19 @@ extern "C" void core_cdc_tx_empty_notify(uint8_t port)
 	SerialUSB.cdcTxEmptyNotify();
 }
 
+extern "C" void core_cdc_set_dtr(uint8_t port, bool b_enable)
+{
+	//empty
+}
+extern "C" void core_cdc_set_rts(uint8_t port, bool b_enable)
+{
+	//empty
+}
+extern "C" void core_cdc_set_coding_ext(uint8_t port, usb_cdc_line_coding_t *cfg)
+{
+	//empty
+}
+
 #if SAM4E || SAM4S
 // On the SAM4E there is only a GPIO pin available to monitor the VBUS state
 void core_vbus_off(CallbackParameter)

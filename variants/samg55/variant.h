@@ -61,7 +61,7 @@ extern "C"{
 
 // Number of pins defined in PinDescription array
 #define APINS_COUNT			(48u)
-static const uint32_t MaxPinNumber = 103;	// last GPIO pin
+static const uint32_t MaxPinNumber = 48;	// last GPIO pin
 
 /*
  * SPI Interfaces
@@ -87,13 +87,13 @@ static const uint32_t MaxPinNumber = 103;	// last GPIO pin
  */
 #define WIRE_INTERFACES_COUNT 1
 
-#define APIN_WIRE_SDA		(PIO_PA3_IDX)	//(3u)
-#define APIN_WIRE_SCL		(PIO_PA4_IDX)	//(4u)
-#define FLEXCOM_INTERFACE   FLEXCOM3
-#define WIRE_INTERFACE		TWI3	//TWI0
-#define WIRE_INTERFACE_ID	ID_FLEXCOM3	//ID_TWI0
-#define WIRE_ISR_HANDLER	FLEXCOM3_Handler //TWI0_Handler
-#define WIRE_ISR_ID			FLEXCOM3_IRQn //TWI0_IRQn
+#define APIN_WIRE_SDA		(PIO_PA10_IDX)	//(3u)
+#define APIN_WIRE_SCL		(PIO_PA9_IDX)	//(4u)
+#define FLEXCOM_INTERFACE   FLEXCOM0
+#define WIRE_INTERFACE		TWI0	//TWI0
+#define WIRE_INTERFACE_ID	ID_FLEXCOM0	//ID_TWI0
+#define WIRE_ISR_HANDLER	FLEXCOM0_Handler //TWI0_Handler
+#define WIRE_ISR_ID			FLEXCOM0_IRQn //TWI0_IRQn
 
 /*
  * UART/USART Interfaces
@@ -101,11 +101,11 @@ static const uint32_t MaxPinNumber = 103;	// last GPIO pin
 // SerialUSB
 #define USB_VBUS_PIN		(54u)
 // Serial
-#define APINS_UART0			(107u)
-#define APIN_UART0_RXD		(9u)
-#define APIN_UART0_TXD		(10u)
+#define APINS_UART0			(3u)
+#define APIN_UART0_RXD		(4u)
+#define APIN_UART0_TXD		(3u)
 // Serial1
-#define APINS_UART1			(108u)
+#define APINS_UART1			(5u)
 #define APIN_UART1_RXD		(5u)
 #define APIN_UART1_TXD		(6u)
 

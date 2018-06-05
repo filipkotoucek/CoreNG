@@ -9,12 +9,9 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNG"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNGfork"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/Release"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/SAM3X8E"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNGfork/SAM3X8E"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CoreNG" srcPrefixMapping="" srcRootPath=""/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CoreNGfork" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -123,11 +120,8 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNG"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNGfork"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/SAM4E8E"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNGfork/SAM4E8E"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CoreNG" srcPrefixMapping="" srcRootPath=""/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CoreNGfork" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -239,11 +233,8 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNG"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNGfork"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/RADDS"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNGfork/RADDS"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CoreNG" srcPrefixMapping="" srcRootPath=""/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CoreNGfork" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -354,11 +345,8 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNG"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNGfork"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/Alligator"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNGfork/Alligator"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CoreNG" srcPrefixMapping="" srcRootPath=""/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CoreNGfork" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -469,11 +457,8 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNG"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNGfork"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/SAM4S"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNGfork/SAM4S"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CoreNG" srcPrefixMapping="" srcRootPath=""/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CoreNGfork" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -583,12 +568,8 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNG"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNGfork"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/SAME70Q20"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/SAME70"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNGfork/SAME70"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CoreNG" srcPrefixMapping="" srcRootPath=""/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CoreNGfork" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -698,11 +679,8 @@
 				</macros>
 				<externalSettings>
 					<externalSetting>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNGfork"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/CoreNG"/>
-						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNGfork/SAMG55"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/CoreNG/SAMG55"/>
-						<entry flags="RESOLVED" kind="libraryFile" name="CoreNGfork" srcPrefixMapping="" srcRootPath=""/>
 						<entry flags="RESOLVED" kind="libraryFile" name="CoreNG" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
